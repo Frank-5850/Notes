@@ -1,20 +1,48 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { HeaderContainer, NotesContainer } from "./app.styles";
+import {
+  HeaderContainer,
+  NotesContainer,
+  NoteHeader,
+  NoteCard,
+  NoteBody,
+  AddIcon,
+  HeaderText,
+} from "./app.styles";
+import { getNotes } from "./api";
+import { useEffect, useState } from "react";
+import AddNoteModal from "./AddNoteModal/AddNoteModal";
 
 function App() {
+  const [notes, setNotes] = useState();
+  const [showModal, setShowModal] = useState(false);
+
+  const getAllNotes = async () => {
+    try {
+      const notes = await getNotes();
+      setNotes(notes.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllNotes();
+  }, [showModal]);
+
   return (
     <div className="App">
+      {showModal && <AddNoteModal setShowModal={setShowModal} />}
       <HeaderContainer>
-        <h1>Notes Notes Notes!</h1>
+        <HeaderText>Notes Notes Notes!</HeaderText>
+        <AddIcon onClick={() => setShowModal(true)} />
       </HeaderContainer>
       <NotesContainer>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
+        {notes?.map((note, i) => (
+          <NoteCard key={i}>
+            <NoteHeader>{note.name}</NoteHeader>
+            <NoteBody>{note.body}</NoteBody>
+          </NoteCard>
+        ))}
       </NotesContainer>
     </div>
   );
