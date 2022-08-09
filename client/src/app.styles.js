@@ -44,7 +44,7 @@ export const NoteCard = styled.div`
   border: 1px solid transparent;
   &:hover {
     border: 1px solid green;
-    box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.3);
+    box-shadow: 0px 0px 30px 3px rgba(0, 255, 117, 0.3);
   }
 `;
 

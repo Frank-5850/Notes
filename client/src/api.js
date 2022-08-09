@@ -18,3 +18,14 @@ export const addNote = async (note) => {
     console.log(error);
   }
 };
+
+export const deleteNote = async (noteId) => {
+  try {
+    await axios.delete(`${URL}/api/delete/note/${noteId}`);
+    const notes = await getNotes();
+    return notes;
+    // return "success";
+  } catch (error) {
+    console.log(error);
+  }
+};

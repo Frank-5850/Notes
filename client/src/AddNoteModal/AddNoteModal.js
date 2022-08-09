@@ -12,7 +12,7 @@ import {
   TextArea,
 } from "./noteModal.styles";
 
-const UpdateCategory = ({ setShowModal }) => {
+const AddNoteModal = ({ setShowModal }) => {
   const [values, setValues] = useState({
     name: "",
     body: "",
@@ -22,7 +22,6 @@ const UpdateCategory = ({ setShowModal }) => {
   const handleChange = (name) => (event) => {
     setValues({
       ...values,
-      error: false,
       [name]: event.target.value,
     });
   };
@@ -31,7 +30,6 @@ const UpdateCategory = ({ setShowModal }) => {
     e.preventDefault();
     try {
       const data = await addNote(values);
-      console.log("hello", data);
       setShowModal(false);
     } catch (error) {
       console.log(error);
@@ -67,4 +65,4 @@ const UpdateCategory = ({ setShowModal }) => {
   );
 };
 
-export default UpdateCategory;
+export default AddNoteModal;

@@ -9,7 +9,6 @@ module.exports = {
         body: body || " ",
       });
       const savedNote = await newNote.save();
-      console.log("hello");
       res.status(201).json(savedNote);
     } catch (err) {
       res.status(500).json(err);

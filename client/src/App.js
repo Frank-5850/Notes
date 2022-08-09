@@ -8,7 +8,7 @@ import {
   AddIcon,
   HeaderText,
 } from "./app.styles";
-import { getNotes } from "./api";
+import { deleteNote, getNotes } from "./api";
 import { useEffect, useState } from "react";
 import AddNoteModal from "./AddNoteModal/AddNoteModal";
 
@@ -29,6 +29,16 @@ function App() {
     getAllNotes();
   }, [showModal]);
 
+  const removeNote = async (id) => {
+    try {
+      const data = await deleteNote(id);
+      // console.log("data", data);
+      setNotes(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="App">
       {showModal && <AddNoteModal setShowModal={setShowModal} />}
@@ -41,6 +51,7 @@ function App() {
           <NoteCard key={i}>
             <NoteHeader>{note.name}</NoteHeader>
             <NoteBody>{note.body}</NoteBody>
+            <button onClick={() => removeNote(note._id)}>X</button>
           </NoteCard>
         ))}
       </NotesContainer>
