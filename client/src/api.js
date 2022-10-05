@@ -24,7 +24,6 @@ export const deleteNote = async (noteId) => {
     await axios.delete(`${URL}/api/delete/note/${noteId}`);
     const notes = await getNotes();
     return notes;
-    // return "success";
   } catch (error) {
     console.log(error);
   }

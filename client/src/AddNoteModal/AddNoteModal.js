@@ -29,7 +29,7 @@ const AddNoteModal = ({ setShowModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await addNote(values);
+      await addNote(values);
       setShowModal(false);
     } catch (error) {
       console.log(error);

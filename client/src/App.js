@@ -2,15 +2,22 @@ import "./App.css";
 import {
   HeaderContainer,
   NotesContainer,
-  NoteHeader,
+  NoteName,
   NoteCard,
   NoteBody,
   AddIcon,
   HeaderText,
+  DeleteButton,
+  DateCreated,
+  CardHeader,
+  LastUpdated,
+  LastUpdatedDate,
+  CardFooter,
 } from "./app.styles";
 import { deleteNote, getNotes } from "./api";
 import { useEffect, useState } from "react";
 import AddNoteModal from "./AddNoteModal/AddNoteModal";
+import moment from "moment";
 
 function App() {
   const [notes, setNotes] = useState();
@@ -32,7 +39,6 @@ function App() {
   const removeNote = async (id) => {
     try {
       const data = await deleteNote(id);
-      // console.log("data", data);
       setNotes(data.data);
     } catch (error) {
       console.log(error);
@@ -49,9 +55,22 @@ function App() {
       <NotesContainer>
         {notes?.map((note, i) => (
           <NoteCard key={i}>
-            <NoteHeader>{note.name}</NoteHeader>
+            <CardHeader>
+              <LastUpdated>Last Updated:</LastUpdated>
+              <LastUpdatedDate>
+                {moment(note.updatedAt).format("MM/DD/YY")}
+              </LastUpdatedDate>
+              <DeleteButton onClick={() => removeNote(note._id)}>
+                X
+              </DeleteButton>
+            </CardHeader>
             <NoteBody>{note.body}</NoteBody>
-            <button onClick={() => removeNote(note._id)}>X</button>
+            <CardFooter>
+              <DateCreated>
+                Created: {moment(note.createdAt).format("MM/DD/YY")}
+              </DateCreated>
+              <NoteName>{note.name}</NoteName>
+            </CardFooter>
           </NoteCard>
         ))}
       </NotesContainer>
